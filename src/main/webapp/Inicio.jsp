@@ -4,9 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Inicio</title>
 </head>
 <body>
-	<h1>Pagina de prueba asdsdasd</h1>
+	<a href="Inicio.jsp" style="margin-right:20px;">Inicio</a>
+	<a href="AgregarSeguro.jsp" style="margin-right:20px;">Agregar Seguros</a>
+	<a href="">Listar Seguros</a>
+	
+	<h1>Soy la página inicio</h1>
+
 </body>
 </html>
