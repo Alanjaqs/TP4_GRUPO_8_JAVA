@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import entidades.TipoSeguros;
 
@@ -15,8 +16,9 @@ public class daoTipoSeguros {
 		private String pass = "root";
 		private String dbName = "segurosGroup";
 		
-		public void listarTipoSeguros() {
+		public ArrayList<TipoSeguros> listarTipoSeguros() {
 		    
+			ArrayList<TipoSeguros> lista = new ArrayList<>();
 		    Connection cn = null;
 
 		    try {
@@ -27,12 +29,14 @@ public class daoTipoSeguros {
 
 		        while (rs.next()) {
 		            TipoSeguros tS = new TipoSeguros();
-		            tS.setDescripcion("descripcion");
+		            tS.setDescripcion(rs.getString("descripcion"));
+		            lista.add(tS);
 		        }
 
 		    } catch (Exception e) {
 		        e.printStackTrace();
 		    } 
 		    
+		    return lista;
 		}
 }
