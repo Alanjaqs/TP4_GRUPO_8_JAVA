@@ -7,6 +7,7 @@ public class Seguros {
 	private int idTipo;
 	private double costoContratacion;
 	private double costoAsegurado;
+	private TipoSeguros tipo;
 	
 	public Seguros() {
 		
@@ -52,6 +53,14 @@ public class Seguros {
 	public void setCostoAsegurado(double costoAsegurado) {
 		this.costoAsegurado = costoAsegurado;
 	}
+	
+    public TipoSeguros getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoSeguros tipo) {
+        this.tipo = tipo;
+    }
 
 	@Override
 	public String toString() {

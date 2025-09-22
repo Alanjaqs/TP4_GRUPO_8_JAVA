@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import entidades.Seguros;
+import entidades.TipoSeguros;
 
 public class DaoSeguros {
 	// Datos conexion
@@ -111,7 +112,43 @@ public class DaoSeguros {
 		    return lista;
 		}
 		
-		
+		public ArrayList<Seguros> obtenerSeguroPorTipo(int tipoSeguro) {
+		    ArrayList<Seguros> listaFiltrada = new ArrayList<>();
+		    try {
+		        Class.forName("com.mysql.cj.jdbc.Driver");
+		    } 
+		    catch (ClassNotFoundException e) {
+		        e.printStackTrace();
+		        return listaFiltrada;
+		    }
+
+		    String sql = "SELECT s.idSeguro, s.descripcion, s.idTipo, s.costoContratacion, s.costoAsegurado, " + 
+		    "t.descripcion AS tipoDescripcion FROM seguros s JOIN tiposeguros t ON t.idTipo = s.idTipo " +
+		                 "WHERE s.idTipo = ?";
+
+		    try (Connection cn = DriverManager.getConnection(host + dbName, user, pass);
+		         PreparedStatement ps = cn.prepareStatement(sql)) {
+		        
+		        ps.setInt(1, tipoSeguro);
+		        try (ResultSet rs = ps.executeQuery()) {
+		            while (rs.next()) {
+		                Seguros s = new Seguros();
+		                TipoSeguros t = new TipoSeguros();
+		                s.setIdSeguros(rs.getInt("idSeguro"));
+		                s.setDescripcion(rs.getString("descripcion"));
+		                s.setIdTipo(rs.getInt("idTipo"));
+		                s.setCostoContratacion(rs.getDouble("costoContratacion"));
+		                s.setCostoAsegurado(rs.getDouble("costoAsegurado"));
+		                t.setDescripcion(rs.getString("tipoDescripcion"));
+		                s.setTipo(t);
+		                listaFiltrada.add(s);
+		            }
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+		    return listaFiltrada;
+		}
 		
 		
 }
