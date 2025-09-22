@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+
 import entidades.Seguros;
 
 public class DaoSeguros {
@@ -76,6 +78,41 @@ public class DaoSeguros {
 			}
 			return filas;
 		}
+		
+		
+		public ArrayList<Seguros> obtenerTodosLosSeguros() {
+		    ArrayList<Seguros> lista = new ArrayList<>();
+		    try { 
+		    	Class.forName("com.mysql.cj.jdbc.Driver");
+		    	} 
+		    catch (ClassNotFoundException e) { 
+		    	e.printStackTrace(); return lista;
+		    	}
+
+		    String sql = "SELECT idSeguro, descripcion, idTipo, costoContratacion, costoAsegurado FROM seguros";
+
+		    try (Connection cn = DriverManager.getConnection(host + dbName, user, pass);
+		         PreparedStatement ps = cn.prepareStatement(sql);
+		         ResultSet rs = ps.executeQuery()) {
+
+		        while (rs.next()) {
+		            Seguros s = new Seguros();
+		            s.setIdSeguros(rs.getInt("idSeguro"));
+		            s.setDescripcion(rs.getString("descripcion"));
+		            s.setIdTipo(rs.getInt("idTipo"));
+		            s.setCostoContratacion(rs.getDouble("costoContratacion"));
+		            s.setCostoAsegurado(rs.getDouble("costoAsegurado"));
+		            lista.add(s);
+		        }
+		    } 
+		    catch (Exception e) { 
+		    	e.printStackTrace(); 
+		    	}
+		    return lista;
+		}
+		
+		
+		
 		
 }
 
