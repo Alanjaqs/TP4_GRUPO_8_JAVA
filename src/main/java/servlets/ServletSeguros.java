@@ -39,6 +39,11 @@ public class ServletSeguros extends HttpServlet {
 		    DaoSeguros daoSeguro = new DaoSeguros();
 		    proximoId = daoSeguro.ObtenerProximoId();       
 		    request.setAttribute("proximoId", proximoId);
+		    
+		    //Carga DDL Seguros
+		     DaoTipoSeguros tiposDao = new DaoTipoSeguros();
+	         ArrayList<TipoSeguros> listaTipos = tiposDao.ObtenerTipoSeguros();
+	         request.setAttribute("listaTipos", listaTipos);
 
 		    request.getRequestDispatcher("/AgregarSeguro.jsp").forward(request, response);
 		    return;

@@ -21,6 +21,12 @@
 		if(request.getAttribute("proximoId") != null){
 			proximoId = (int)request.getAttribute("proximoId");
 		}
+		
+		//Cargar DDL
+		ArrayList<TipoSeguros> listaTipos = new ArrayList<TipoSeguros>();
+		if (request.getAttribute("listaTipos") != null) {
+		    listaTipos = (ArrayList<TipoSeguros>) request.getAttribute("listaTipos");
+		}
 	
 	%>
 
@@ -36,14 +42,13 @@
 			<input type="text" name="txtDescripcion" style="margin-left:100px"></input>
 			<br/><br/>
 			Tipo de seguro:
-			<select name="tipoSeguros" style="margin-left:80px">
-			<%
-				// Logica para el dropdown con foreach
-			%>
-			<option value="<%  %>"><% %></option>
-			<% // llave de cierre foreach %>
-			</select>	
-			<br/><br/>
+            <select name="tipoSeguros" style="margin-left:80px">
+            <% if (listaTipos != null) {
+            for (TipoSeguros ts : listaTipos) { %>
+            <option value="<%=ts.getIdTipo()%>"><%=ts.getDescripcion()%></option>
+            <% }} %>
+            </select>
+            <br/><br/>
 			Costo contratacion:
 			<input type="text" name="txtCostoCont" style="margin-left:57px"></input>
 			<br/><br/>
