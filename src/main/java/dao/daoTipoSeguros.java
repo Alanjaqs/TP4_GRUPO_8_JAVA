@@ -9,14 +9,14 @@ import java.util.ArrayList;
 import entidades.TipoSeguros;
 
 
-public class daoTipoSeguros {
+public class DaoTipoSeguros {
 	
 		private String host = "jdbc:mysql://localhost:3306/";
 		private String user = "root";
 		private String pass = "root";
 		private String dbName = "segurosGroup";
 		
-		public ArrayList<TipoSeguros> listarTipoSeguros() {
+		public ArrayList<TipoSeguros> ObtenerTipoSeguros() {
 		    
 			ArrayList<TipoSeguros> lista = new ArrayList<>();
 		    Connection cn = null;

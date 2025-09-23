@@ -1,3 +1,6 @@
+<%@page import="entidades.TipoSeguros" %>
+<%@page import="entidades.Seguros" %>
+<%@page import="java.util.ArrayList" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -9,26 +12,26 @@
 </head>
 <body>
     <a href="Inicio.jsp">Inicio</a>
-	<a href="servletSeguros">Agregar Seguros</a>
-	<a href="servletSeguros">Listar Seguros</a>
+	<a href="ServletSeguros">Agregar Seguros</a>
+	<a href="ServletSeguros">Listar Seguros</a>
 	
 	<%
 		// Cargo una nueva lista de clase TipoSeguro con la lista traida (tipoS) del servlet
-		ArrayList<TipoSeguro> listaTipoSeguro = new ArrayList<TipoSeguro>();
+		ArrayList<TipoSeguros> listaTipoSeguro = new ArrayList<TipoSeguros>();
 		if(request.getAttribute("tipoS") != null){
-			listaTipoSeguro = (ArrayList<TipoSeguro>)request.getAttribute("tipoS");
+			listaTipoSeguro = (ArrayList<TipoSeguros>)request.getAttribute("tipoS");
 		}
 		
 		// Cargo una nueva lista de clase Seguro con la lista traida (seg) del servlet
-		ArrayList<Seguro> listaSeguro = new ArrayList<Seguro>();
+		ArrayList<Seguros> listaSeguro = new ArrayList<Seguros>();
 		if(request.getAttribute("seg") != null){
-			listaSeguro = (ArrayList<Seguro>)request.getAttribute("seg");
+			listaSeguro = (ArrayList<Seguros>)request.getAttribute("seg");
 		}
 		
 		// Cargo lista filtrada de Seguro con la lista traida (segFiltrados) del servlet
-		ArrayList<Seguro> listaFiltrada = new ArrayList<Seguro>();
+		ArrayList<Seguros> listaFiltrada = new ArrayList<Seguros>();
 		if(request.getAttribute("segFiltrados") != null){
-			listaFiltrada = (ArrayList<Seguro>)request.getAttribute("segFiltrados");
+			listaFiltrada = (ArrayList<Seguros>)request.getAttribute("segFiltrados");
 		}
 		
 		// Cargo bool para saber si el filtro se activo o no (lo inicializo en false para que empiece con un valor)
@@ -47,10 +50,10 @@
 	<select name="tipoSeguros">
 		<%
 			if(listaTipoSeguro != null)
-			for(TipoSeguro tipoS : listaTipoSeguro)
+			for(TipoSeguros tipoS : listaTipoSeguro)
 			{					
 		%>
-		<option value="<%= tipoS.getId() %>"><%= tipoS.getDescripcion() %></option>
+		<option value="<%= tipoS.getIdTipo() %>"><%= tipoS.getDescripcion() %></option>
 		<%  } %>
 		</select>
 	<input type="submit" name="filtrar" value="Filtrar"> 
@@ -63,12 +66,12 @@
   <%
 		// Lista completa
 		if (listaSeguro != null && !filtro) {
-    		for (Seguro seguro : listaSeguro) {
+    		for (Seguros seguro : listaSeguro) {
 		%>
         <tr>
-            <td><%= seguro.getId() %></td>
+            <td><%= seguro.getIdSeguros() %></td>
             <td><%= seguro.getDescripcion() %></td>
-            <td><%= seguro.getTipoDescripcion() %></td>
+            <td><%= seguro.getDescripcion() %></td>
             <td><%= seguro.getCostoContratacion() %></td>
             <td><%= seguro.getCostoAsegurado() %></td>
         </tr>
@@ -76,12 +79,12 @@
     		}
     	// Lista filtrada
 		} else if (listaFiltrada != null && filtro) {
-    		for (Seguro seguro : listaFiltrada) {
+    		for (Seguros seguro : listaFiltrada) {
 		%>
         <tr>
-            <td><%= seguro.getId() %></td>
+            <td><%= seguro.getIdSeguros() %></td>
             <td><%= seguro.getDescripcion() %></td>
-            <td><%= seguro.getTipoDescripcion() %></td>
+            <td><%= seguro.getDescripcion() %></td>
             <td><%= seguro.getCostoContratacion() %></td>
             <td><%= seguro.getCostoAsegurado() %></td>
         </tr>

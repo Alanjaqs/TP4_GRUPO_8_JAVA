@@ -1,3 +1,6 @@
+<%@page import="entidades.TipoSeguros" %>
+<%@page import="entidades.Seguros" %>
+<%@page import="java.util.ArrayList" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -9,15 +12,24 @@
 <body>
 
 	<a href="Inicio.jsp" style="margin-right:20px;">Inicio</a>
-	<a href="AgregarSeguro.jsp" style="margin-right:20px;">Agregar Seguros</a>
-	<a href="">Listar Seguros</a>
+	<a href="ServletSeguros?accion=agregar" style="margin-right:20px;">Agregar Seguros</a>
+	<a href="ServletSeguros?accion=listar">Listar Seguros</a>
+	
+	<% 
+		// Cargo proximo ID
+		int proximoId = 0;
+		if(request.getAttribute("proximoId") != null){
+			proximoId = (int)request.getAttribute("proximoId");
+		}
+	
+	%>
 
 	<h2>Agregar Seguros</h2>
-		<form method="post" action="">
+		<form method="post" action="ServletSeguros?accion=agregar">
 			<br/>
 			Id seguro:
 			<label style="margin-left:120px">
-			<%  // donde se mostrara proximo ID %>
+			<%= proximoId %>
 			</label>
 			<br/><br/>
 			Descripcion:
@@ -29,7 +41,7 @@
 				// Logica para el dropdown con foreach
 			%>
 			<option value="<%  %>"><% %></option>
-			<% // llave de cierre foreach  %>
+			<% // llave de cierre foreach %>
 			</select>	
 			<br/><br/>
 			Costo contratacion:
