@@ -11,9 +11,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-    <a href="Inicio.jsp">Inicio</a>
-	<a href="ServletSeguros">Agregar Seguros</a>
-	<a href="ServletSeguros">Listar Seguros</a>
+	<a href="Inicio.jsp" style="margin-right:20px;">Inicio</a>
+	<a href="ServletSeguros?accion=agregar" style="margin-right:20px;">Agregar Seguros</a>
+	<a href="ServletSeguros?accion=listar">Listar Seguros</a>
 	
 	<%
 		// Cargo una nueva lista de clase TipoSeguro con la lista traida (tipoS) del servlet
@@ -42,7 +42,7 @@
 	
 	%>
 	
-	<form action="" method="get">
+	<form action="ServletSeguros" method="get">
 	<input type="hidden" name="accion" value="listar">
 	<h1>Tipo de seguro en la base de datos</h1>
 	
@@ -71,7 +71,7 @@
         <tr>
             <td><%= seguro.getIdSeguros() %></td>
             <td><%= seguro.getDescripcion() %></td>
-            <td><%= seguro.getDescripcion() %></td>
+            <td><%= seguro.getIdTipo() %></td>
             <td><%= seguro.getCostoContratacion() %></td>
             <td><%= seguro.getCostoAsegurado() %></td>
         </tr>
@@ -84,7 +84,7 @@
         <tr>
             <td><%= seguro.getIdSeguros() %></td>
             <td><%= seguro.getDescripcion() %></td>
-            <td><%= seguro.getDescripcion() %></td>
+            <td><%= seguro.getIdTipo() %></td>
             <td><%= seguro.getCostoContratacion() %></td>
             <td><%= seguro.getCostoAsegurado() %></td>
         </tr>
