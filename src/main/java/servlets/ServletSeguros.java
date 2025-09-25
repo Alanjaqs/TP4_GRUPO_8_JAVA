@@ -30,9 +30,9 @@ public class ServletSeguros extends HttpServlet {
 		String accion = request.getParameter("accion");
 		if (accion == null) accion = "listar";
 			    
-		switch (accion) {
+		switch (accion) { 
 		// Pagina Agregar Seguro
-			case "agregar": 
+			case "agregar": {
 		        	
 		    // Carga de label proximo ID
 		    int proximoId;
@@ -47,24 +47,40 @@ public class ServletSeguros extends HttpServlet {
 
 		    request.getRequestDispatcher("/AgregarSeguro.jsp").forward(request, response);
 		    return;
-		 
-		    // Pagina Listar Seguros
-	        case "listar":
-	        	
-	            int tipoSeguro = 0; 
-	            String tipoSeguroParam = request.getParameter("tipoSeguros");
-	           
-	            DaoSeguros daoSeguroListar = new DaoSeguros();
-	            ArrayList<Seguros> listaSeguros;
+		}
+			
+			// Pagina Listar Seguros
+	        case "listar":{
+	            // 1) Cargar dropdown de tipos
+	            DaoTipoSeguros daoTipo = new DaoTipoSeguros();
+	            ArrayList<TipoSeguros> listaTipos = daoTipo.ObtenerTipoSeguros();
+	            request.setAttribute("tipoS", listaTipos);
 
-	            if (tipoSeguro > 0) {
-	                listaSeguros = daoSeguroListar.obtenerSeguroPorTipo(tipoSeguro);
-	            } else {
-	                listaSeguros = daoSeguroListar.obtenerTodosLosSeguros();
+	            // 2) Traer lista completa
+	            DaoSeguros daoSeguro = new DaoSeguros();
+	            ArrayList<Seguros> listaS = daoSeguro.obtenerTodosLosSeguros();
+	            request.setAttribute("seg", listaS);
+
+	            boolean filtrado = false;
+
+	            // 3) Filtro (solo si vino el submit y el valor > 0)
+	            if (request.getParameter("filtrar") != null) {
+	                String valorSelect = request.getParameter("tipoSeguros");
+	                int valorSelectNum = 0;
+	                try { valorSelectNum = Integer.parseInt(valorSelect); } catch (Exception ignore) {}
+
+	                if (valorSelectNum > 0) {
+	                    ArrayList<Seguros> listaFiltrada = daoSeguro.obtenerSeguroPorTipo(valorSelectNum);
+	                    request.setAttribute("segFiltrados", listaFiltrada);
+	                    filtrado = true;
+	                }
 	            }
-	            request.setAttribute("listaSeguros", listaSeguros);
+
+	            request.setAttribute("filtroBD", filtrado);
+
 	            request.getRequestDispatcher("/ListarSeguros.jsp").forward(request, response);
 	            return;
+	        }
 		}
 			
 	}
