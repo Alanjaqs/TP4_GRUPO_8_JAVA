@@ -47,12 +47,26 @@ public class ServletSeguros extends HttpServlet {
 
 		    request.getRequestDispatcher("/AgregarSeguro.jsp").forward(request, response);
 		    return;
-		 // Pagina Listar Seguros
+		 
+		    // Pagina Listar Seguros
 	        case "listar":
-		
+	        	
+	            int tipoSeguro = 0; 
+	            String tipoSeguroParam = request.getParameter("tipoSeguros");
+	           
+	            DaoSeguros daoSeguroListar = new DaoSeguros();
+	            ArrayList<Seguros> listaSeguros;
+
+	            if (tipoSeguro > 0) {
+	                listaSeguros = daoSeguroListar.obtenerSeguroPorTipo(tipoSeguro);
+	            } else {
+	                listaSeguros = daoSeguroListar.obtenerTodosLosSeguros();
+	            }
+	            request.setAttribute("listaSeguros", listaSeguros);
+	            request.getRequestDispatcher("/ListarSeguros.jsp").forward(request, response);
+	            return;
 		}
-		
-		
+			
 	}
 
 
