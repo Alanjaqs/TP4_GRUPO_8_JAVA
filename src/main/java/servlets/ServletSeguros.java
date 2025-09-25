@@ -71,7 +71,27 @@ public class ServletSeguros extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+        // AGREGAR SEGURO
+        if(request.getParameter("btnAceptar") != null) {
+            Seguros s = new Seguros();
+            s.setDescripcion(request.getParameter("txtDescripcion"));
+            s.setIdTipo(Integer.parseInt(request.getParameter("tipoSeguros")));
+            s.setCostoContratacion(Double.parseDouble(request.getParameter("txtCostoCont")));
+            s.setCostoAsegurado(Double.parseDouble(request.getParameter("txtCostoAseg")));
+
+            DaoSeguros dao = new DaoSeguros();
+            int filas = dao.agregarSeguro(s);
+            request.setAttribute("cantFilas", filas);
+            request.setAttribute("proximoId", dao.ObtenerProximoId());
+            
+            DaoTipoSeguros daoTipos = new DaoTipoSeguros();
+            request.setAttribute("listaTipos", daoTipos.ObtenerTipoSeguros());
+
+            RequestDispatcher rd = request.getRequestDispatcher("/AgregarSeguro.jsp");
+            rd.forward(request, response);
+            return;
+        }
+        
 		// Carga de label proximo ID
     	int proximoId;
     	DaoSeguros daoSeguro = new DaoSeguros();
